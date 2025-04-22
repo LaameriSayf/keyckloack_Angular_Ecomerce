@@ -1,76 +1,114 @@
-/* --------- CONTAINER --------- */
-.category-container {
+/* Base Styles */
+.category-management-container {
   padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-  background-color: #f9f9f9;
-  border-radius: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* --------- HEADERS --------- */
-h2, h3 {
-  text-align: center;
-  color: #2c3e50;
-}
-
-/* --------- TABLE --------- */
-.categories-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.categories-table th,
-.categories-table td {
-  border: 1px solid #ddd;
-  padding: 20px; /* Augmenter la taille du padding pour agrandir les cellules */
-  text-align: left;
-  font-size: 1.2rem; /* Augmenter la taille de la police */
-}
-
-.categories-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.categories-table td {
-  font-size: 1.1rem; /* Augmenter la taille de la police des cellules */
-}
-
-/* --------- FORM --------- */
-.category-form {
+.header-section {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-input[type="text"] {
-  padding: 12px; /* Augmenter le padding pour plus de confort */
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-/* --------- BUTTONS --------- */
-.btn {
-  padding: 12px 25px; /* Augmenter le padding des boutons */
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.btn-add {
-  background-color: #27ae60;
-  color: white;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.page-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Table */
+/* Centrage du tableau */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: auto; /* Permet au tableau de définir sa propre largeur */
+  border-collapse: collapse;
+}
+
+/* Si vous voulez aussi centrer verticalement */
+.category-management-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh; /* Prend toute la hauteur de l'écran */
+  margin-left: 500px; /* Centre horizontalement */
+  width: max-content;
+
+  padding: 20px;
+}
+
+.table-header {
+  background-color: #f1f5f9;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.actions-cell {
+  white-space: nowrap;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  transition: all 0.3s;
 }
 
 .btn-primary {
@@ -78,83 +116,145 @@ input[type="text"] {
   color: white;
 }
 
-.btn-secondary {
-  background-color: #7f8c8d;
-  color: white;
+.btn-primary:hover {
+  background-color: #2980b9;
 }
 
-.btn-danger {
+.btn-outline-secondary {
+  background-color: transparent;
+  border: 1px solid #95a5a6;
+  color: #7f8c8d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-edit {
+  background-color: #f39c12;
+  color: white;
+  margin-right: 5px;
+}
+
+.btn-delete {
   background-color: #e74c3c;
   color: white;
 }
 
-.btn:hover {
-  opacity: 0.9;
+/* Alerts */
+.alert {
+  padding: 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* --------- MODAL STYLING --------- */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
 }
 
-.modal.show {
-  display: block;
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
-.modal-content {
-  background-color: #fff;
-  margin: 5% auto;
-  padding: 30px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 800px; /* Agrandir la largeur du modal */
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #aaa;
+.alert-dismissible .close {
+  background: none;
+  border: none;
+  font-size: 20px;
   cursor: pointer;
 }
 
-.close:hover {
-  color: #000;
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1040;
+  display: none;
 }
 
-/* --------- RESPONSIVE --------- */
-@media (max-width: 600px) {
-  .categories-table, .categories-table thead, .categories-table tbody, .categories-table th, .categories-table td, .categories-table tr {
-    display: block;
-  }
+.modal-backdrop.show {
+  display: block;
+}
 
-  .categories-table tr {
-    margin-bottom: 15px;
-  }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  outline: 0;
+}
 
-  .categories-table td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .categories-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    font-weight: bold;
-    text-align: left;
-  }
+.modal-dialog {
+  max-width: 500px;
+  width: 90%;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

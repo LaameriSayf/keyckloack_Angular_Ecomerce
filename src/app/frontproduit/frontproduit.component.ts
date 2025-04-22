@@ -9,9 +9,19 @@ import { KeycloakService } from '../keycloak/keycloak.service';
   styleUrls: ['./frontproduit.component.css']
 })
 export class FrontproduitComponent implements OnInit {
+changeMainImage(_t84: any) {
+throw new Error('Method not implemented.');
+}
+decreaseQuantity() {
+throw new Error('Method not implemented.');
+}
+increaseQuantity() {
+throw new Error('Method not implemented.');
+}
   produits: Produit[] = [];
   selectedProduit: Produit | null = null;
   showModal = false;
+quantity: any;
 
   constructor(private produitService: ProduitService,private keycloakService: KeycloakService) { }
 

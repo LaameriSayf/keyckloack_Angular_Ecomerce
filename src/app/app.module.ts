@@ -15,6 +15,7 @@ import { FrontproduitComponent } from './frontproduit/frontproduit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { NewsListComponent } from './news-list/news-list.component';
+import { FilterPipe } from './filter.pipe';
 
 
 export function kcFactory(kcService: KeycloakService) {
@@ -32,12 +33,13 @@ export function kcFactory(kcService: KeycloakService) {
     ChatSearchComponent,
     FrontproduitComponent,
     DashboardComponent,
-    NewsListComponent
+    NewsListComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,FormsModule
+    HttpClientModule,FormsModule,
   ],
   providers: [
     

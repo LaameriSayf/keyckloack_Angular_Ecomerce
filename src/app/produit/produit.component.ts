@@ -11,6 +11,16 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./produit.component.css']
 })
 export class ProduitComponent {
+searchTerm: any;
+applyFilters() {
+throw new Error('Method not implemented.');
+}
+exportToCSV() {
+throw new Error('Method not implemented.');
+}
+printTable() {
+throw new Error('Method not implemented.');
+}
   produits: Produit[] = [];
   produit: Produit = new Produit('', '', 0, 0, '', new CategorieProduit('', ''));
   categories: CategorieProduit[] = [];

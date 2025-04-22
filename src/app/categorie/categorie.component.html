@@ -1,69 +1,127 @@
-<div class="category-container">
-  <h2>Gestion des Catégories</h2>
+<div class="category-management-container">
+  <div class="header-section">
+    <h2 class="page-title">Gestion des Catégories</h2>
+    <button class="btn btn-primary btn-add" (click)="openAddModal()">
+      <i class="fas fa-plus"></i> Nouvelle Catégorie
+    </button>
+  </div>
 
-  <!-- Bouton d'ajout -->
-  <button class="btn btn-add" (click)="openAddModal()">+ Ajouter une Catégorie</button>
+  <!-- Feedback Messages -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible">
+    {{ successMessage }}
+    <button (click)="dismissAlert()" class="close">&times;</button>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible">
+    {{ errorMessage }}
+    <button (click)="dismissAlert()" class="close">&times;</button>
+  </div>
 
-  <!-- Table des catégories -->
-  <h3>Liste des Catégories</h3>
-  <table class="categories-table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let categorie of categories">
-        <td>{{ categorie.nom }}</td>
-        <td>{{ categorie.description }}</td>
-        <td>
-          <button (click)="setEditCategorie(categorie)" class="btn btn-secondary">Éditer</button>
-          <button (click)="deleteCategorie(categorie.id!)" class="btn btn-danger">Supprimer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Formulaire modification -->
-  <div *ngIf="editCategorie" class="category-form edit-form">
-    <h3>Modifier la Catégorie</h3>
-    <form (ngSubmit)="updateCategorie()">
-      <div class="form-group">
-        <label for="edit-nom">Nom:</label>
-        <input type="text" id="edit-nom" [(ngModel)]="editCategorie.nom" name="nom" required />
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
+  </div>
+  
+  <!-- Categories Table -->
+  <div class="card table-card">
+    <div class="card-header">
+      <h3>Liste des Catégories</h3>
+      <div class="table-controls">
+        <input type="text" placeholder="Rechercher..." class="form-control" >
+        <button class="btn btn-sm btn-outline-secondary">Filtrer</button>
       </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
 
-      <div class="form-group">
-        <label for="edit-description">Description:</label>
-        <input type="text" id="edit-description" [(ngModel)]="editCategorie.description" name="description" required />
+
+      <table class="table table-hover">
+        <thead class="table-header">
+          <tr>
+            <th width="30%">Nom</th>
+            <th width="50%">Description</th>
+            <th width="20%">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categorie of categories">
+            <td>{{ categorie.nom }}</td>
+            <td>{{ categorie.description || '-' }}</td>
+            <td class="actions-cell">
+              <button (click)="setEditCategorie(categorie)" class="btn btn-sm btn-edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteCategorie(categorie.id!)" class="btn btn-sm btn-delete">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="categories.length === 0">
+            <td colspan="3" class="text-center">Aucune catégorie trouvée</td>
+          </tr>
+        </tbody>
+      </table>
       </div>
+    </div>
+  </div>
 
-      <button type="submit" class="btn btn-primary">Mettre à jour</button>
-      <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Annuler</button>
-    </form>
+  <!-- Edit Form (inline) -->
+  <div *ngIf="editCategorie" class="card edit-form-card">
+    <div class="card-header">
+      <h3>Modifier la Catégorie</h3>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateCategorie()" class="form-edit">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="edit-nom">Nom</label>
+            <input type="text" class="form-control" id="edit-nom" 
+                   [(ngModel)]="editCategorie.nom" name="nom" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="edit-description">Description</label>
+            <input type="text" class="form-control" id="edit-description" 
+                   [(ngModel)]="editCategorie.description" name="description">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <button type="button" (click)="cancelEdit()" class="btn btn-outline-secondary">Annuler</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
-<!-- MODAL AJOUT -->
-<div class="modal" [ngClass]="{ 'show': showAddModal }">
-  <div class="modal-content">
-    <span class="close" (click)="closeAddModal()">&times;</span>
-    <h2>Ajouter une Catégorie</h2>
-    <form (ngSubmit)="addCategorie()" class="category-form">
-      <div class="form-group">
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" [(ngModel)]="categorie.nom" name="nom" required />
+<!-- Add Modal -->
+<div class="modal-backdrop" [ngClass]="{ 'show': showAddModal }"></div>
+<div class="modal" [ngClass]="{ 'show': showAddModal }" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ajouter une Catégorie</h5>
+        <button type="button" class="close" (click)="closeAddModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <input type="text" id="description" [(ngModel)]="categorie.description" name="description" required />
+      <div class="modal-body">
+        <form (ngSubmit)="addCategorie()" class="form-add">
+          <div class="form-group">
+            <label for="nom">Nom *</label>
+            <input type="text" class="form-control" id="nom" 
+                   [(ngModel)]="categorie.nom" name="nom" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" 
+                   [(ngModel)]="categorie.description" name="description">
+          </div>
+        </form>
       </div>
-
-      <button type="submit" class="btn btn-primary">Ajouter</button>
-      <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Annuler</button>
-    </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="addCategorie()">Ajouter</button>
+      </div>
+    </div>
   </div>
 </div>

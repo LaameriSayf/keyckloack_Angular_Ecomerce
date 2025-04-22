@@ -15,6 +15,9 @@ export class CategorieComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
   showAddModal: boolean = false;
+  searchText: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortColumn: string = 'nom';
 
   constructor(private categorieService: CategorieService) {}
 
@@ -143,5 +146,45 @@ export class CategorieComponent implements OnInit {
   dismissAlert(): void {
     this.errorMessage = null;
     this.successMessage = null;
+  }
+  get filteredCategories(): CategorieProduit[] {
+    let filtered = this.categories;
+    
+    if (this.searchText) {
+      const searchLower = this.searchText.toLowerCase();
+      filtered = filtered.filter(c => 
+        c.nom.toLowerCase().includes(searchLower) || 
+        (c.description && c.description.toLowerCase().includes(searchLower))
+    )}
+    
+    return this.sortData(filtered);
+  }
+
+  sort(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+  }
+
+  private sortData(data: CategorieProduit[]): CategorieProduit[] {
+    return [...data].sort((a, b) => {
+      const valA = a[this.sortColumn as keyof CategorieProduit] || '';
+      const valB = b[this.sortColumn as keyof CategorieProduit] || '';
+      
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
+
+  getRandomColor(): string {
+    const colors = [
+      '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', 
+      '#e74a3b', '#6610f2', '#6f42c1', '#fd7e14'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 }

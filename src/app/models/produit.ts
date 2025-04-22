@@ -8,6 +8,11 @@ export class Produit {
     stock: number;
     imageUrl: string;
     categorie: CategorieProduit;
+promotion: any;
+isWished: any;
+images: any;
+rating: any;
+reviews: any;
   
     constructor(
       nom: string,
